@@ -2,6 +2,7 @@ package com.bookapp.service;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 import com.bookapp.exception.BookNotFoundException;
@@ -25,6 +26,9 @@ public class BookServiceImpl implements BookService {
 	public List<Book> getBookByAuthor(String author) throws BookNotFoundException {
 		int flag = 0;
 		List<Book> bookList = getAllBooks();
+		Collections.sort(bookList, (book1, book2) -> {
+			return book1.getAuthor().compareTo(book2.getAuthor());
+		});
 		List<Book> result = new ArrayList<>();
 		for (Book book : bookList) {
 			if (author.equals(book.getAuthor())) {
@@ -43,6 +47,9 @@ public class BookServiceImpl implements BookService {
 	public List<Book> getBookByCategory(String category) throws BookNotFoundException {
 		int flag = 0;
 		List<Book> bookList = getAllBooks();
+		Collections.sort(bookList, (book1, book2) -> {
+			return book1.getCategory().compareTo(book2.getCategory());
+		});
 		List<Book> result = new ArrayList<>();
 		for (Book book : bookList) {
 			if (category.equals(book.getCategory())) {
@@ -68,7 +75,7 @@ public class BookServiceImpl implements BookService {
 		List<Book> bookList = getAllBooks();
 		List<Book> result = new ArrayList<>();
 		for (Book book : bookList) {
-			if (price>book.getPrice()) {
+			if (price > book.getPrice()) {
 				result.add(book);
 				flag = 1;
 			}
